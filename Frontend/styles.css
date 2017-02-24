@@ -1,0 +1,24 @@
+.form-control {
+    margin: 5px;
+}
+
+.form-header {
+    margin-left: 5px;
+}
+
+.form-response {
+    margin-left: 5px;
+}
+
+table {
+    table-layout: fixed;
+    width: 70%;
+}
+
+table td {
+    text-align: center;
+}
+
+table, th, tr, td {
+    border: 1px solid black;
+}
