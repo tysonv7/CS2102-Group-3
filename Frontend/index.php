@@ -17,16 +17,30 @@
             <input type="text" name="password" class="form-control"></br>
             <input type="submit" class="form-control">
         </form>
-        <!--PHP script-->
+
+        <!--Connect to DB-->
+        <?php
+            $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=password")
+            or die("Could not connect: " . pg_last_error());
+        ?>
+
         <div class="form-response">
             <?php
                 if (!empty($_POST['userid']) && !empty($_POST['password'])) {
-                    // Need to connect to db to verify username against password
-                    // but leave this unimplemented for now
-                    $_SESSION['userid'] = $_POST['userid'];
-                    $_SESSION['password'] = $_POST['password'];
-                    header('Location: user.php');
-                    exit();
+                    $uid = $_POST['userid'];
+                    $pw = $_POST['password'];
+                    $query = "SELECT * FROM users WHERE id = '$uid'";
+                    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+                    $row = pg_fetch_row($result);
+
+                    if ($row[0] == $uid && $row[2] == $pw) {
+                        $_SESSION['userid'] = $_POST['userid'];
+                        $_SESSION['password'] = $_POST['password'];
+                        header('Location: user.php');
+                        exit();
+                    } else {
+                        echo 'Wrong username or password entered';
+                    }
                 }
             ?>
         </div>
