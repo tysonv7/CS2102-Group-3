@@ -11,7 +11,7 @@ duration INT NOT NULL,
 category VARCHAR(64),
 fundNeeded INT NOT NULL);
 
-CREATE TABLE "create" (
+CREATE TABLE start (
 creatorId VARCHAR(64) REFERENCES "user" (id),
 projectId VARCHAR(64) REFERENCES project (id));
 
