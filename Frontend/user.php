@@ -87,10 +87,44 @@
         </table></br>
         <div>
             <div>Search for more projects:</div>
-            <span>
-                <input type="text" name="search" class="search-bar search-control">
-                <input type="submit" class="search-control">
-            </span>
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="get">
+                <span>
+                    <input type="text" name="searchterm" class="search-bar search-control">
+                    <input type="submit" class="search-control">
+                </span>
+            </form>
         </div>
+
+        <!--Query DB for projects with searchterm-->
+        <?php
+            if (isset($_GET['searchterm'])) {
+                $searchterm = $_GET['searchterm'];
+                $query = "SELECT * FROM project WHERE title LIKE '%".$searchterm."%'";
+                $result = pg_query($query) or die ('Query failed: ' . pg_last_error());
+
+                echo '<table class="search-table">';
+                echo '<tr>';
+                echo '<th colspan="6">Results</th>';
+                echo '</tr>';
+
+                if (pg_num_rows($result) == 0) {
+                    echo '<tr>';
+                    echo '<td colspan="6">No results</td>';
+                    echo '</tr>';
+                } else {
+                    while ($row = pg_fetch_row($result)) {
+                        echo '<tr>';
+                        echo '<td>' . $row[0] . '</td>';
+                        echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[1].'</a>'.'</td>';
+                        echo '<td>' . $row[2] . '</td>';
+                        echo '<td>' . $row[3] . '</td>';
+                        echo '<td>' . $row[4] . '</td>';
+                        echo '<td>' . $row[5] . '</td>';
+                        echo '</tr>';
+                    }
+                }
+                echo '</table>';
+            }
+        ?>
     </body>
 </html>

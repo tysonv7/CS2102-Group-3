@@ -30,3 +30,7 @@ table, th, tr, td {
 .search-bar.search-control {
     width: 20%;
 }
+
+.search-table {
+    margin-top: 20px;
+}
