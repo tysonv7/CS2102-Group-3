@@ -78,42 +78,42 @@ INSERT INTO project VALUES ('79', 'Jerry', '2016-05-28', 47, 'Technology', 35421
 
 INSERT INTO project VALUES ('80', 'Tin', '2016-10-21', 65, 'Design', 18466, 'The fanciest tin you have ever seen.');
 
-INSERT INTO project VALUES ('81', 'SMOVE: Smartphone Stabilizer / Powerback in One', '2016-02-12', 100, 'Technology', 100000);
+INSERT INTO project VALUES ('81', 'SMOVE', '2016-02-12', 100, 'Technology', 100000,'Smartphone Stabilizer and Powerbank All in One');
 
-INSERT INTO project VALUES ('82', 'ASAP Connect: The Future of USB Cables', '2016-01-18', 20, 'Technology', 75000);
+INSERT INTO project VALUES ('82', 'ASAP Connect: The Future of USB Cables', '2016-01-18', 20, 'Technology', 75000, 'Revolutionary 18K gold plated magnetic USB cable changing the way you connect to your phone forever');
 
-INSERT INTO project VALUES ('83', 'Mous Limitless iPhone Case: Airo Shock Protection', '2016-02-14', 75, 'Design', 400000);
+INSERT INTO project VALUES ('83', 'Mous Limitless iPhone Case: Airo Shock Protection', '2016-02-14', 75, 'Design', 400000, 'Limitless is the newest range of iPhone cases by Mous. These cases utilize Airo Shock, an advanced smart-material engineered to offer the ultimate protection.');
 
-INSERT INTO project VALUES ('84', 'Indivisible - RPG from the Creators of Skullgirls', '2016-03-13', 90, 'Gaming', 1500000);
+INSERT INTO project VALUES ('84', 'Indivisible - RPG from the Creators of Skullgirls', '2016-03-13', 90, 'Gaming', 1500000, 'Indivisible - A 2D Action RPG from Lab Zero PS4/XB1/Win/Mac/Linux');
 
-INSERT INTO project VALUES ('85', 'Give a life to Angel', '2016-03-20', 45, 'Animal', 1000);
+INSERT INTO project VALUES ('85', 'Give a life to Angel', '2016-03-20', 45, 'Animal', 1000, 'Help little Angel to rehabilitate her walking ability');
 
-INSERT INTO project VALUES ('86', 'Fighting For a Golden Future', '2016-04-01', 60,  'Animal', 2000);
+INSERT INTO project VALUES ('86', 'Fighting For a Golden Future', '2016-04-01', 60,  'Animal', 2000, 'Fighting For a Golden Future: Safeguarding the Golden Tree Frog');
 
-INSERT INTO project VALUES ('87', 'What I love and hate about you', '2016-04-15', 90, 'Art', 4000);
+INSERT INTO project VALUES ('87', 'What I love and hate about you', '2016-04-15', 90, 'Art', 4000, 'Sacrifices are the manifestation of selfless love.Los sacrificios son manifestación de un amor puro.');
 
-INSERT INTO project VALUES ('88', 'Passbrook - A Senior Thesis Film', '2016-05-09', 160, 'Art', 3000);
+INSERT INTO project VALUES ('88', 'Passbrook - A Senior Thesis Film', '2016-05-09', 160, 'Art', 3000, 'A quirky and colorful art collides the dimensions of two opposing worlds in a single day.');
 
-INSERT INTO project VALUES ('89', 'Hops & Heroes Comics', '2016-05-18', 70, 'Comic', 2000);
+INSERT INTO project VALUES ('89', 'Hops & Heroes Comics', '2016-05-18', 70, 'Comic', 2000, 'As a business and a non-profit, we are continuously striving to be better, to do more. Which is why we our always looking for ways to make a difference through comics, charity, and maybe even a little craft beer.');
 
-INSERT INTO project VALUES ('90', 'Chaos Theory: Zombies VS. Dinosaurs', '2016-06-02',  150, 'Comic', 12000);
+INSERT INTO project VALUES ('90', 'Chaos Theory: Zombies VS. Dinosaurs', '2016-06-02',  150, 'Comic', 12000, 'The UNDEAD battle the EXTINCT in the CRAZIEST comic book clash of 2017!');
 
-INSERT INTO project VALUES ('91', 'INTI ECO LODGE', '2016-06-13', 60, 'Community', 10000);
+INSERT INTO project VALUES ('91', 'INTI ECO LODGE', '2016-06-13', 60, 'Community', 10000, 'The First Self Sufficient and Sustainable Well Being Center in the Peruvian Amazon');
 
-INSERT INTO project VALUES ('92', 'Ad.dar Center for Syrian Refugees in Istanbul', '2016-07-07', 90, 'Community', 9000);
+INSERT INTO project VALUES ('92', 'Ad.dar Center for Syrian Refugees in Istanbul', '2016-07-07', 90, 'Community', 9000, 'Helping Syrian refugees in Istanbul to rebuild their lives through education, community and support.');
 
-INSERT INTO project VALUES ('93', 'DIVERSION A New Dance Film', '2016-07-25', 40, 'Dance', 4000);
+INSERT INTO project VALUES ('93', 'DIVERSION A New Dance Film', '2016-07-25', 40, 'Dance', 4000, 'Help a creative new dance film come to life!');
 
-INSERT INTO project VALUES ('94', 'Requiem for Aleppo', '2016-08-06', 60, 'Dance', 20000);
+INSERT INTO project VALUES ('94', 'Requiem for Aleppo', '2016-08-06', 60, 'Dance', 20000, 'Premiering at Sadlers Wells; Help us fund this powerful new production. Ticket sales to charity');
 
-INSERT INTO project VALUES ('95', 'The Orb: Danish Designed, Intelligient Lighting', '2016-08-23', 90, 'Design', 50000);
+INSERT INTO project VALUES ('95', 'The Orb: Danish Designed, Intelligient Lighting', '2016-08-23', 90, 'Design', 50000, 'A beautifully designed lamp that adjusts to your needs and brings unparalleled lighting to your home');
 
-INSERT INTO project VALUES ('96', 'JUISIR - Zero cleaning, Maximum juice', '2016-09-05', 120, 'Design', 4000);
+INSERT INTO project VALUES ('96', 'JUISIR - Zero cleaning, Maximum juice', '2016-09-05', 120, 'Design', 4000, 'JUISIR is an innovative cold press juicer requiring no cleaning.');
 
-INSERT INTO project VALUES ('97', 'LudoSport lightsaber instructors #spreadthelight', '2016-09-26', 150, 'Education', 10000);
+INSERT INTO project VALUES ('97', 'LudoSport lightsaber instructors #spreadthelight', '2016-09-26', 150, 'Education', 10000, 'Join and spread the sport with the lightsaber! Train or help others to become LudoSport Instructors.');
 
-INSERT INTO project VALUES ('98', 'Artemis4Refugees', '2016-10-01', 180, 'Education', 5000);
+INSERT INTO project VALUES ('98', 'Artemis4Refugees', '2016-10-01', 180, 'Education', 5000, 'Education is Stronger than Fear');
 
-INSERT INTO project VALUES ('99', 'Reforestum: Grow your own forest in real life!', '2016-10-23', 90, 'Environment', 500);
+INSERT INTO project VALUES ('99', 'Reforestum: Grow your own forest in real life!', '2016-10-23', 90, 'Environment', 500, 'Did you ever want to plant a tree to help make the world a better place? How about a whole forest?');
 
-INSERT INTO project VALUES ('100', 'Development of Eco-Friendly Refuse Facility', '2016-11-18', 150, 'Environment', 500000);
+INSERT INTO project VALUES ('100', 'Development of Eco-Friendly Refuse Facility', '2016-11-18', 150, 'Environment', 500000, 'Planning to bring a state of the art eco friendly refuse processing facility to Chicago');
