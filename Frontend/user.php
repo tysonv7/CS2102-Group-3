@@ -99,7 +99,7 @@
         <?php
             if (isset($_GET['searchterm'])) {
                 $searchterm = $_GET['searchterm'];
-                $query = "SELECT * FROM project WHERE title LIKE '%".$searchterm."%'";
+                $query = "SELECT * FROM project WHERE LOWER(title) LIKE LOWER('%".$searchterm."%')";
                 $result = pg_query($query) or die ('Query failed: ' . pg_last_error());
 
                 echo '<table class="search-table">';
