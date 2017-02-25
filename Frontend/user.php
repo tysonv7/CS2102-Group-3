@@ -36,7 +36,7 @@
             <?php
                 $userid = $_SESSION['userid'];
                 ///*
-                $query = "SELECT * FROM project p WHERE p.id = (SELECT projectid FROM start s WHERE s.creatorid = '$userid')";
+                $query = "SELECT * FROM project p WHERE p.id IN (SELECT projectid FROM start s WHERE s.creatorid = '$userid')";
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 //*/
 
@@ -85,5 +85,12 @@
                 }
             ?>
         </table></br>
+        <div>
+            <div>Search for more projects:</div>
+            <span>
+                <input type="text" name="search" class="search-bar search-control">
+                <input type="submit" class="search-control">
+            </span>
+        </div>
     </body>
 </html>

@@ -14,7 +14,7 @@
             <div class="form-header">Username:</div>
             <input type="text" name="userid" class="form-control"></br>
             <div class="form-header">Password:</div>
-            <input type="text" name="password" class="form-control"></br>
+            <input type="password" name="password" class="form-control"></br>
             <input type="submit" class="form-control">
         </form>
 
