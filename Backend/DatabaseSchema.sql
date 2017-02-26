@@ -1,4 +1,4 @@
-CREATE TABLE "user"(
+CREATE TABLE users(
 id VARCHAR(64) PRIMARY KEY,
 name VARCHAR(64) NOT NULL,
 password VARCHAR(64) NOT NULL);
@@ -6,7 +6,7 @@ password VARCHAR(64) NOT NULL);
 CREATE TABLE project (
 id VARCHAR(64) PRIMARY KEY,
 creator VARCHAR(64)
-  REFERENCES "user" (id)
+  REFERENCES users (id)
   ON UPDATE CASCADE ON DELETE CASCADE,
 title VARCHAR(64) NOT NULL,
 startDate DATE NOT NULL,
@@ -17,7 +17,7 @@ description VARCHAR(2000));
 
 CREATE TABLE back (
 backerId VARCHAR(64)
-  REFERENCES "user" (id)
+  REFERENCES users (id)
   ON UPDATE CASCADE ON DELETE CASCADE,
 projectId VARCHAR(64)
   REFERENCES project (id)
