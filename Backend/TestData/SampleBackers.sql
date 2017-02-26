@@ -1,3 +1,83 @@
+INSERT INTO back VALUES ('mmccoy2x', '1', 32);
+
+INSERT INTO back VALUES ('drichardsp7', '2', 920);
+
+INSERT INTO back VALUES ('ediazn', '3', 14);
+
+INSERT INTO back VALUES ('mgordonrf', '4', 988);
+
+INSERT INTO back VALUES ('mbaker3y', '5', 143);
+
+INSERT INTO back VALUES ('jbishopex', '6', 538);
+
+INSERT INTO back VALUES ('rmiller4b', '7', 156);
+
+INSERT INTO back VALUES ('dfrazieri5', '8', 654);
+
+INSERT INTO back VALUES ('sholmesm2', '9', 795);
+
+INSERT INTO back VALUES ('arossge', '10', 591);
+
+INSERT INTO back VALUES ('shicksev', '11', 536);
+
+INSERT INTO back VALUES ('bking4t', '12', 174);
+
+INSERT INTO back VALUES ('jrayfq', '13', 567);
+
+INSERT INTO back VALUES ('jturner8x', '14', 322);
+
+INSERT INTO back VALUES ('nrodriguezmu', '15', 822);
+
+INSERT INTO back VALUES ('larmstrong66', '16', 223);
+
+INSERT INTO back VALUES ('wolson7u', '17', 283);
+
+INSERT INTO back VALUES ('jhunter1s', '18', 65);
+
+INSERT INTO back VALUES ('bhunterdz', '19', 504);
+
+INSERT INTO back VALUES ('smorales9t', '20', 354);
+
+INSERT INTO back VALUES ('thansenrn', '21', 996);
+
+INSERT INTO back VALUES ('sbrown91', '22', 326);
+
+INSERT INTO back VALUES ('ewheeler7m', '23', 225);
+
+INSERT INTO back VALUES ('ebankskd', '24', 735);
+
+INSERT INTO back VALUES ('csims47', '25', 154);
+
+INSERT INTO back VALUES ('rhamilton4r', '26', 172);
+
+INSERT INTO back VALUES ('bjohnstonij', '27', 668);
+
+INSERT INTO back VALUES ('rwestel', '28', 526);
+
+INSERT INTO back VALUES ('mstanleyj4', '29', 689);
+
+INSERT INTO back VALUES ('lmoralesoo', '30', 889);
+
+INSERT INTO back VALUES ('gford9y', '31', 358);
+
+INSERT INTO back VALUES ('revansdm', '32', 451);
+
+INSERT INTO back VALUES ('jwoodr1', '33', 974);
+
+INSERT INTO back VALUES ('dsullivan3', '34', 4);
+
+INSERT INTO back VALUES ('sburkeny', '35', 863);
+
+INSERT INTO back VALUES ('lwhiten7', '36', 836);
+
+INSERT INTO back VALUES ('eriverait', '37', 678);
+
+INSERT INTO back VALUES ('bking4t', '38', 174);
+
+INSERT INTO back VALUES ('syounge9', '39', 514);
+
+INSERT INTO back VALUES ('sgreene9b', '40', 336);
+
 INSERT INTO back VALUES ('mgutierrezno', '41', 677);
 
 INSERT INTO back VALUES ('gfostergq', '42', 514);
