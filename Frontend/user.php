@@ -36,18 +36,18 @@
             <?php
                 $userid = $_SESSION['userid'];
                 ///*
-                $query = "SELECT * FROM project p WHERE p.id IN (SELECT projectid FROM start s WHERE s.creatorid = '$userid')";
+                $query = "SELECT * FROM project p WHERE p.creator = '$userid'";
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 //*/
 
                 while ($row = pg_fetch_row($result)) {
                     echo '<tr>';
                     echo '<td>' . $row[0] . '</td>';
-                    echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[1].'</a>'.'</td>';
-                    echo '<td>' . $row[2] . '</td>';
+                    echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[2].'</a>'.'</td>';
                     echo '<td>' . $row[3] . '</td>';
                     echo '<td>' . $row[4] . '</td>';
                     echo '<td>' . $row[5] . '</td>';
+                    echo '<td>' . $row[6] . '</td>';
                     echo '</tr>';
                 }
             ?>
@@ -76,11 +76,11 @@
                 while ($row = pg_fetch_row($result)) {
                     echo '<tr>';
                     echo '<td>' . $row[0] . '</td>';
-                    echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[1].'</a>'.'</td>';
-                    echo '<td>' . $row[2] . '</td>';
+                    echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[2].'</a>'.'</td>';
                     echo '<td>' . $row[3] . '</td>';
                     echo '<td>' . $row[4] . '</td>';
                     echo '<td>' . $row[5] . '</td>';
+                    echo '<td>' . $row[6] . '</td>';
                     echo '</tr>';
                 }
             ?>
@@ -112,14 +112,22 @@
                     echo '<td colspan="6">No results</td>';
                     echo '</tr>';
                 } else {
+                    echo '<tr>';
+                    echo '<th>ID</th>';
+                    echo '<th>Title</th>';
+                    echo '<th>Start Date</th>';
+                    echo '<th>Duration</th>';
+                    echo '<th>Category</th>';
+                    echo '<th>Funding Goal</th>';
+                    echo '</tr>';
                     while ($row = pg_fetch_row($result)) {
                         echo '<tr>';
                         echo '<td>' . $row[0] . '</td>';
-                        echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[1].'</a>'.'</td>';
-                        echo '<td>' . $row[2] . '</td>';
+                        echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[2].'</a>'.'</td>';
                         echo '<td>' . $row[3] . '</td>';
                         echo '<td>' . $row[4] . '</td>';
                         echo '<td>' . $row[5] . '</td>';
+                        echo '<td>' . $row[6] . '</td>';
                         echo '</tr>';
                     }
                 }

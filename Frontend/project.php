@@ -25,11 +25,12 @@
                 $row = pg_fetch_row($result);
 
                 echo '<h1>Project ID: '.$project_id.'</h1>';
-                echo '<h1>'.$row[1].'</h1>';
-                echo '<div>Start Date: '.$row[2].'</div>';
-                echo '<div>Duration: '.$row[3].' days</div>';
-                echo '<div>Category: '.$row[4].'</div>';
-                echo '<div>Funding Goal: '.$row[5].'</div>';
+                echo '<h1>'.$row[2].'</h1>';
+                echo '<div>Start Date: '.$row[3].'</div>';
+                echo '<div>Duration: '.$row[4].' days</div>';
+                echo '<div>Category: '.$row[5].'</div>';
+                echo '<div>Funding Goal: '.$row[6].'</div>';
+                echo '<div>Description: '.$row[7].'</div>';
             }
         ?>
     </body>
