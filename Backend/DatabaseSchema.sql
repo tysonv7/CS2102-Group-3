@@ -22,4 +22,5 @@ backerId VARCHAR(64)
 projectId VARCHAR(64)
   REFERENCES project (id)
   ON UPDATE CASCADE ON DELETE CASCADE,
-amount INT NOT NULL);
+amount INT NOT NULL
+PRIMARY KEY (backerID, projectID));
