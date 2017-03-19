@@ -1,26 +1,73 @@
-CREATE TABLE users(
-id VARCHAR(64) PRIMARY KEY,
-name VARCHAR(64) NOT NULL,
-password VARCHAR(64) NOT NULL);
+CREATE TABLE User (
+  id VARCHAR(64),
+  name VARCHAR(64) NOT NULL,
+  password VARCHAR(64) NOT NULL,
+  PRIMARY KEY (id)
+);
 
-CREATE TABLE project (
-id VARCHAR(64) PRIMARY KEY,
-creator VARCHAR(64)
-  REFERENCES users (id)
-  ON UPDATE CASCADE ON DELETE CASCADE,
-title VARCHAR(64) NOT NULL,
-startDate DATE NOT NULL,
-duration INT NOT NULL,
-category VARCHAR(64),
-fundNeeded INT NOT NULL,
-description VARCHAR(2000));
+CREATE TABLE Admin (
+  uid VARCHAR(64),
+  FOREIGN KEY (uid) REFERENCES User (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (uid)
+);
 
-CREATE TABLE back (
-backerId VARCHAR(64)
-  REFERENCES users (id)
-  ON UPDATE CASCADE ON DELETE CASCADE,
-projectId VARCHAR(64)
-  REFERENCES project (id)
-  ON UPDATE CASCADE ON DELETE CASCADE,
-amount INT NOT NULL
-PRIMARY KEY (backerID, projectID));
+CREATE TABLE Following (
+  followedId VARCHAR(64),
+  followerId VARCHAR(64),
+  FOREIGN KEY (followedId, followerId) REFERENCES User (id, id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (followedId, followerId)
+);
+
+CREATE TABLE Project (
+  id VARCHAR(64),
+  title VARCHAR(64) NOT NULL,
+  startDate DATE NOT NULL,
+  duration INT NOT NULL,
+  category VARCHAR(64),
+  fundNeeded INT NOT NULL,
+  description VARCHAR(2000),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE FeaturedProject (
+  pid VARCHAR(64),
+  featureDate DATE NOT NULL,
+  FOREIGN KEY (pid) REFERENCES Project (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (pid)
+);
+
+CREATE TABLE Start (
+  sid VARCHAR(64),
+  pid VARCHAR(64),
+  FOREIGN KEY (sid) REFERENCES User (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (pid) REFERENCES Project (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (sid, pid)
+);
+
+CREATE TABLE Back (
+  bid VARCHAR(64),
+  pid VARCHAR(64),
+  amount INT NOT NULL,
+  FOREIGN KEY (bid) REFERENCES User (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (pid) REFERENCES Project (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (bid, pid)
+);
+
+CREATE TABLE Comment (
+  cid VARCHAR(64),
+  uid VARCHAR(64),
+  pid VARCHAR(64),
+  content VARCHAR(512) NOT NULL,
+  FOREIGN KEY (uid) REFERENCES User (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (pid) REFERENCES Project (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (uid, pid, cid)
+);
