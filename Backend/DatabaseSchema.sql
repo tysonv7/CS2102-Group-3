@@ -1,4 +1,4 @@
-CREATE TABLE User (
+﻿CREATE TABLE Users (
   id VARCHAR(64),
   name VARCHAR(64) NOT NULL,
   password VARCHAR(64) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE User (
 
 CREATE TABLE Admin (
   uid VARCHAR(64),
-  FOREIGN KEY (uid) REFERENCES User (id)
+  FOREIGN KEY (uid) REFERENCES Users (id)
     ON UPDATE CASCADE ON DELETE CASCADE,
   PRIMARY KEY (uid)
 );
@@ -15,7 +15,7 @@ CREATE TABLE Admin (
 CREATE TABLE Following (
   followedId VARCHAR(64),
   followerId VARCHAR(64),
-  FOREIGN KEY (followedId, followerId) REFERENCES User (id, id)
+  FOREIGN KEY (followedId, followerId) REFERENCES Users (id, id)
     ON UPDATE CASCADE ON DELETE CASCADE,
   PRIMARY KEY (followedId, followerId)
 );
@@ -42,7 +42,7 @@ CREATE TABLE FeaturedProject (
 CREATE TABLE Start (
   sid VARCHAR(64),
   pid VARCHAR(64),
-  FOREIGN KEY (sid) REFERENCES User (id)
+  FOREIGN KEY (sid) REFERENCES Users (id)
     ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (pid) REFERENCES Project (id)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -53,7 +53,7 @@ CREATE TABLE Back (
   bid VARCHAR(64),
   pid VARCHAR(64),
   amount INT NOT NULL,
-  FOREIGN KEY (bid) REFERENCES User (id)
+  FOREIGN KEY (bid) REFERENCES Users (id)
     ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (pid) REFERENCES Project (id)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -65,9 +65,10 @@ CREATE TABLE Comment (
   uid VARCHAR(64),
   pid VARCHAR(64),
   content VARCHAR(512) NOT NULL,
-  FOREIGN KEY (uid) REFERENCES User (id)
+  FOREIGN KEY (uid) REFERENCES Users (id)
     ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (pid) REFERENCES Project (id)
     ON UPDATE CASCADE ON DELETE CASCADE,
   PRIMARY KEY (uid, pid, cid)
 );
+
