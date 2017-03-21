@@ -15,7 +15,9 @@ CREATE TABLE Admin (
 CREATE TABLE Following (
   followedId VARCHAR(64),
   followerId VARCHAR(64),
-  FOREIGN KEY (followedId, followerId) REFERENCES Users (id, id)
+  FOREIGN KEY (followedId) REFERENCES Users (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (followerId) REFERENCES Users (id)
     ON UPDATE CASCADE ON DELETE CASCADE,
   PRIMARY KEY (followedId, followerId)
 );
@@ -71,4 +73,3 @@ CREATE TABLE Comment (
     ON UPDATE CASCADE ON DELETE CASCADE,
   PRIMARY KEY (uid, pid, cid)
 );
-
