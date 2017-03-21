@@ -998,4 +998,5 @@ INSERT INTO users (id, name, password) VALUES ('sgriffinro', 'Sarah Griffin', 'b
 INSERT INTO users (id, name, password) VALUES ('bdavisrp', 'Brandon Davis', 'APIznD4bWoGa');
 INSERT INTO users (id, name, password) VALUES ('eharrisrq', 'Ernest Harris', 'hsaZmjP');
 INSERT INTO users (id, name, password) VALUES ('cpattersonrr', 'Cheryl Patterson', 'mQ2vWa72lx');
+INSERT INTO users (id, name, password) VALUES ('tysonv7', 'Khairul Rizqi', 'password');
 
