@@ -1,3 +1,8 @@
+INSERT INTO users (id, name, password) VALUES ('tysonv7', 'Khairul Rizqi', 'password');
+INSERT INTO users (id, name, password) VALUES ('gintoki', 'Sakata Gintoki', 'laketoya');
+INSERT INTO users (id, name, password) VALUES ('naegi', 'Makoto Naegi', 'superhighschoollevelhope');
+INSERT INTO users (id, name, password) VALUES ('kirigiri', 'Kirigiri Kyoko', 'superhighschoolleveldetective');
+INSERT INTO users (id, name, password) VALUES ('izuru', 'Kamakura Izuru', 'superhighschoollevelhope');
 INSERT INTO users (id, name, password) VALUES ('lhudson0', 'Lori Hudson', 'aKBvFKhP');
 INSERT INTO users (id, name, password) VALUES ('slane1', 'Shawn Lane', 'bapeQJWSNod');
 INSERT INTO users (id, name, password) VALUES ('hvasquez2', 'Harold Vasquez', 'PTf6GdB5wZCd');
@@ -998,5 +1003,3 @@ INSERT INTO users (id, name, password) VALUES ('sgriffinro', 'Sarah Griffin', 'b
 INSERT INTO users (id, name, password) VALUES ('bdavisrp', 'Brandon Davis', 'APIznD4bWoGa');
 INSERT INTO users (id, name, password) VALUES ('eharrisrq', 'Ernest Harris', 'hsaZmjP');
 INSERT INTO users (id, name, password) VALUES ('cpattersonrr', 'Cheryl Patterson', 'mQ2vWa72lx');
-INSERT INTO users (id, name, password) VALUES ('tysonv7', 'Khairul Rizqi', 'password');
-
