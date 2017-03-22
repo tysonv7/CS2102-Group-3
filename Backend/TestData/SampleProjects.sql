@@ -80,7 +80,7 @@ INSERT INTO project VALUES ('40', 'Colour Sound', '2016-05-29', 60, 'Music', 200
 
 INSERT INTO project VALUES ('41', 'Voyatouch', '2016-06-01', 39, 'Technology', 456200, 'Drag this device across any surface and it will map out the surface texture on your laptop.');
 
-INSERT INTO project VALUES ('42', 'Tres-Zap', '2016-01-03', 53, 'Technology', 183648, 'The most efficient way of draining the sap from rubber trees');
+INSERT INTO project VALUES ('42', 'Tres-Zap', '2016-06-03', 53, 'Technology', 183648, 'The most efficient way of draining the sap from rubber trees');
 
 INSERT INTO project VALUES ('43', 'Solarbreeze', '2016-06-11', 55, 'Technology', 22300, 'Portable solar powered fan which you can carry around with you, keeping yourself cool at all times.');
 
