@@ -1,4 +1,4 @@
-INSERT INTO users (id, name, password) VALUES ('tysonv7', 'Khairul Rizqi', 'password');
+INSERT INTO users (id, name, password) VALUES ('tysonv7', 'Takao Kinomiya', 'password');
 INSERT INTO users (id, name, password) VALUES ('gintoki', 'Sakata Gintoki', 'laketoya');
 INSERT INTO users (id, name, password) VALUES ('naegi', 'Makoto Naegi', 'superhighschoollevelhope');
 INSERT INTO users (id, name, password) VALUES ('kirigiri', 'Kirigiri Kyoko', 'superhighschoolleveldetective');
