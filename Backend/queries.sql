@@ -22,18 +22,16 @@ FROM Users
 WHERE LOWER(name) LIKE LOWER('%Julie%');
 
 -- Search projects created by a specific user
-SELECT p.id, p.title, p.description
+SELECT p.pid, p.title, p.description
 FROM Project p, Start s
-WHERE s.sid = 'rarnoldks'
-  AND s.pid = p.id;
-
-List of users
+WHERE s.uid = 'rarnoldks'
+  AND s.pid = p.pid;
 
 -- List of user's backings from most backed to least
-SELECT p.id, p.title, p.description, b.amount
+SELECT p.pid, p.title, p.description, b.amount
 FROM Project p, Back b
-WHERE b.bid = 'dsullivan3'
-  AND b.pid = p.id
+WHERE b.uid = 'dsullivan3'
+  AND b.pid = p.pid
 ORDER BY b.amount DESC;
 
 
@@ -50,7 +48,7 @@ ORDER BY b.amount DESC;
 
 
 -- Admin can see how many projects each person backed
-SELECT b.bid, COUNT(*) AS numProjectsBacked, SUM(amount) AS totalAmountBacked
+SELECT b.uid, COUNT(*) AS numProjectsBacked, SUM(amount) AS totalAmountBacked
 FROM Back b
-GROUP BY b.bid
+GROUP BY b.uid
 ORDER BY COUNT(*) DESC;
