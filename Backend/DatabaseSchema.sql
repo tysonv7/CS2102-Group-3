@@ -12,6 +12,8 @@ CREATE TABLE Admin (
   PRIMARY KEY (uid)
 );
 
+-- uid1: person being followed
+-- uid2: the follower
 CREATE TABLE Following (
   uid1 VARCHAR(64),
   uid2 VARCHAR(64),
