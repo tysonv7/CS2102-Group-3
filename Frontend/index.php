@@ -29,14 +29,14 @@
                 if (!empty($_POST['userid']) && !empty($_POST['password'])) {
                     $uid = $_POST['userid'];
                     $pw = $_POST['password'];
-                    $query = "SELECT * FROM users WHERE id = '$uid'";
+                    $query = "SELECT * FROM users WHERE uid = '$uid'";
                     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                     $row = pg_fetch_row($result);
 
                     if ($row[0] == $uid && $row[2] == $pw) {
                         $_SESSION['userid'] = $_POST['userid'];
                         $_SESSION['password'] = $_POST['password'];
-                        header('Location: user.php');
+                        header('Location: dashboard.php');
                         exit();
                     } else {
                         echo 'Wrong username or password entered';
