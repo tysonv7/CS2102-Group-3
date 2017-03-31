@@ -197,3 +197,9 @@ INSERT INTO back VALUES ('barnoldc', '98', 91);
 INSERT INTO back VALUES ('rjames4u', '99', 966);
 
 INSERT INTO back VALUES ('gporterck', '100', 84);
+
+INSERT INTO back VALUES ('tysonv7', '100', 184);
+INSERT INTO back VALUES ('tysonv7', '88', 824);
+INSERT INTO back VALUES ('gintoki', '70', 843);
+INSERT INTO back VALUES ('gintoki', '100', 1874);
+INSERT INTO back VALUES ('gintoki', '11', 124);
