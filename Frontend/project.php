@@ -1,5 +1,8 @@
 <?php
     session_start();
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 ?>
 
 <!DOCTYPE html>
@@ -105,23 +108,84 @@
             }
         ?>
 
+        <!-- Comment section -->
+        <div>
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);?>" method='post'>
+                <textarea name='commentBox' cols='80' rows='5'></textarea>
+                <input type='submit' name='submitComment' value='Comment'>
+            </form>
+        </div>
+
+        <?php
+            if (isset($_GET['id'])) {
+                $userid = $_SESSION['userid'];
+                $project_id = $_GET['id'];
+                if (isset($_POST['submitComment'])) {
+                    // Query database to receive the comments for that project
+                    $query = "SELECT c.cid FROM Comment c";
+                    $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                    $commentid = pg_num_rows($result) + 1;
+                    $content = $_POST['commentBox'];
+                    $query = "INSERT INTO Comment (cid, uid, pid, content)
+                              VALUES ('$commentid', '$userid', '$project_id', '$content')";
+                    $result = pg_query($query) or die('Query failed: '.pg_last_error());
+
+                    // Refresh the page to update the backing amount notification
+                    header('Location: '.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+                    die;
+                }
+            }
+        ?>
+
+        <br>
         <table>
             <tr>
-                <th colspan='2'>Comments</th>
+                <?php
+                    if ($_SESSION['isAdmin']) {
+                        echo "<th colspan='3'>Comments</th>";
+                    } else {
+                        echo "<th colspan='2'>Comments</th>";
+                    }
+                ?>
             </tr>
             <?php
                 if (isset($_GET['id'])) {
                     $project_id = $_GET['id'];
                     // Query database to receive the comments for that project
-                    $query = "SELECT u.name, c.content FROM comment c, users u 
+                    $query = "SELECT u.name, c.content, c.cid FROM comment c, users u 
                               WHERE c.pid = '$project_id' AND c.uid = u.uid";
                     $result = pg_query($query) or die ('Query failed: '.pg_last_error());
 
+                    if (pg_num_rows($result) == 0) {
+                        if ($_SESSION['isAdmin']) {
+                            echo "<th colspan='3'>No comments</th>";
+                        } else {
+                            echo "<th colspan='2'>No comments</th>";
+                        }
+                    }
                     while ($row = pg_fetch_row($result)) {
                         echo '<tr>';
                         echo '<td>'.$row[0].'</td>';
                         echo '<td>'.$row[1].'</td>';
+                        if ($_SESSION['isAdmin']) {
+                            echo '<td>';
+                            echo "<form action='".htmlspecialchars($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'])."' method='post'>";
+                            echo "<button type='submit' name='deleteComment' value='$row[2]'>Delete</button>";
+                            echo '</form>';
+                            echo '</td>';
+                        }
                         echo '</tr>';
+                    }
+                    
+                    if (isset($_POST['deleteComment'])) {
+                        $cid = $_POST['deleteComment'];
+                        $query = "DELETE FROM Comment 
+                                  WHERE cid = '$cid'";
+                        $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+
+                        // Refresh the page to update the backing amount notification
+                        header('Location: '.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+                        die;
                     }
                 }
             ?>

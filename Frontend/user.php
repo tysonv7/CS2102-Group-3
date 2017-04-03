@@ -145,6 +145,11 @@
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 //*/
 
+                if (pg_num_rows($result) == 0) {
+                    echo '<tr>';
+                    echo "<td colspan='6'>No projects created</td>";
+                    echo '</tr>';
+                }
                 while ($row = pg_fetch_row($result)) {
                     echo '<tr>';
                     echo '<td>' . $row[0] . '</td>';
@@ -178,6 +183,11 @@
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 //*/
 
+                if (pg_num_rows($result) == 0) {
+                    echo '<tr>';
+                    echo "<td colspan='6'>No projects backed</td>";
+                    echo '</tr>';
+                }
                 while ($row = pg_fetch_row($result)) {
                     echo '<tr>';
                     echo '<td>' . $row[0] . '</td>';
