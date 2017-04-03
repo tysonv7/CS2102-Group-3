@@ -140,7 +140,13 @@
         <br>
         <table>
             <tr>
-                <th colspan='3'>Comments</th>
+                <?php
+                    if ($_SESSION['isAdmin']) {
+                        echo "<th colspan='3'>Comments</th>";
+                    } else {
+                        echo "<th colspan='2'>Comments</th>";
+                    }
+                ?>
             </tr>
             <?php
                 if (isset($_GET['id'])) {
@@ -150,6 +156,13 @@
                               WHERE c.pid = '$project_id' AND c.uid = u.uid";
                     $result = pg_query($query) or die ('Query failed: '.pg_last_error());
 
+                    if (pg_num_rows($result) == 0) {
+                        if ($_SESSION['isAdmin']) {
+                            echo "<th colspan='3'>No comments</th>";
+                        } else {
+                            echo "<th colspan='2'>No comments</th>";
+                        }
+                    }
                     while ($row = pg_fetch_row($result)) {
                         echo '<tr>';
                         echo '<td>'.$row[0].'</td>';

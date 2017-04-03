@@ -43,6 +43,8 @@
                         $result = pg_query($query) or die ('Query failed: '.pg_last_error());
                         if (pg_num_rows($result) == 1) {
                             $_SESSION['isAdmin'] = true;
+                        } else {
+                            $_SESSION['isAdmin'] = false;
                         }
                         header('Location: dashboard.php');
                         exit();

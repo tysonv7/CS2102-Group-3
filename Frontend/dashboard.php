@@ -71,6 +71,11 @@
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 //*/
 
+                if (pg_num_rows($result) == 0) {
+                    echo '<tr>';
+                    echo "<td colspan='6'>No projects created</td>";
+                    echo '</tr>';
+                }
                 while ($row = pg_fetch_row($result)) {
                     echo '<tr>';
                     echo '<td>' . $row[0] . '</td>';
@@ -108,6 +113,11 @@
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 //*/
 
+                if (pg_num_rows($result) == 0) {
+                    echo '<tr>';
+                    echo "<td colspan='6'>No projects backed</td>";
+                    echo '</tr>';
+                }
                 while ($row = pg_fetch_row($result)) {
                     echo '<tr>';
                     echo '<td>' . $row[0] . '</td>';
@@ -174,45 +184,223 @@
             <div>Search for more projects:</div>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="get">
                 <span>
-                    <input type="text" name="searchterm" class="search-bar search-control">
+                    <input type="text" name="st" class="search-bar search-control">
+                    <select name='ss'>
+                        <option value='project'>Project</option>
+                        <option value='users'>User</option>
+                        <option value='comment'>Comments</option>
+                        <option value='admin'>Administrators</option>
+                        <option value='featuredproject'>Featured</option>
+                    </select>
+                    <input type='radio' name='sk' value='title' checked>Title/Name
+                    <input type='radio' name='sk' value='id'>ID
                     <input type="submit" class="search-control" value='Search'>
                 </span>
             </form>
         </div>
 
         <?php
-            if (isset($_GET['searchterm'])) {
-                $searchterm = $_GET['searchterm'];
-                $query = "SELECT * FROM project WHERE LOWER(title) LIKE LOWER('%".$searchterm."%')";
-                $result = pg_query($query) or die ('Query failed: ' . pg_last_error());
-
+            if (isset($_GET['st'])) {
+                // Define the parameters for the search, there are three:
+                // 1. Searchterm
+                // 2. Table to search in
+                // 3. Key to search by, ID or Title/Name
+                $searchterm = $_GET['st'];
+                $searchtable = $_GET['ss'];
+                $searchkey = $_GET['sk'];
+                $query = "SELECT * FROM "."$searchtable";
+                switch ($searchtable) {
+                    case 'users':
+                        switch ($searchkey) {
+                            case 'id':
+                                $query = $query." WHERE LOWER(uid) LIKE LOWER('%".$searchterm."%')";
+                                break;
+                            case 'title':
+                            default:
+                                $query = $query." WHERE LOWER(name) LIKE LOWER('%".$searchterm."%')";
+                                break;
+                        }
+                        break;
+                    case 'comment':
+                        switch ($searchkey) {
+                            case 'id':
+                                $query = $query." WHERE cid = '$searchterm'";
+                                break;
+                            case 'title':
+                            default:
+                                $query = $query." WHERE LOWER(content) LIKE LOWER('%".$searchterm."%')";
+                                break;
+                        }
+                        break;
+                    case 'admin':
+                        switch ($searchkey) {
+                            case 'id':
+                                $query = $query." WHERE LOWER(uid) LIKE LOWER('%".$searchterm."%')";
+                                break;
+                            case 'title':
+                            default:
+                                // Edit the query to match uids to users table
+                                $query = $query." a, users u WHERE LOWER(u.name) LIKE LOWER('%".$searchterm."%') AND a.uid = u.uid";
+                                break;
+                        }
+                        break;
+                    case 'featuredproject':
+                        switch ($searchkey) {
+                            case 'id':
+                                $query = $query." WHERE pid = '$searchterm'";
+                                break;
+                            case 'title':
+                            default:
+                                // Edit the query to match pids to the project table
+                                $query = $query." fp, project p WHERE LOWER(p.title) LIKE LOWER('%".$searchterm."%') AND fp.pid = p.pid";
+                                break;
+                        }
+                        break;
+                    case 'project':
+                    default:
+                        switch ($searchkey) {
+                            case 'id':
+                                $query = $query." WHERE pid = '$searchterm'";
+                                break;
+                            case 'title':
+                            default:
+                                $query = $query." WHERE LOWER(title) LIKE LOWER('%".$searchterm."%')";
+                                break;
+                        }
+                        break;
+                }
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                
                 echo '<table class="search-table">';
                 echo '<tr>';
-                echo '<th colspan="6">Results</th>';
+                switch ($searchtable) {
+                        case 'comment':
+                            echo '<td colspan="4">Results</td>';
+                            break;
+                        case 'users':
+                        case 'admin':
+                            echo '<td colspan="2">Results</td>';
+                            break;
+                        case 'project':
+                        case 'featuredproject':
+                        default:
+                            echo '<td colspan="6">Results</td>';
+                            break;
+                    }
                 echo '</tr>';
-
+                
                 if (pg_num_rows($result) == 0) {
                     echo '<tr>';
-                    echo '<td colspan="6">No results</td>';
+                    switch ($searchtable) {
+                        case 'comment':
+                            echo '<td colspan="4">No results</td>';
+                            break;
+                        case 'users':
+                        case 'admin':
+                            echo '<td colspan="2">No results</td>';
+                            break;
+                        case 'project':
+                        case 'featuredproject':
+                        default:
+                            echo '<td colspan="6">No results</td>';
+                            break;
+                    }
                     echo '</tr>';
                 } else {
-                    echo '<tr>';
-                    echo '<th>ID</th>';
-                    echo '<th>Title</th>';
-                    echo '<th>Start Date</th>';
-                    echo '<th>Duration</th>';
-                    echo '<th>Category</th>';
-                    echo '<th>Funding Goal</th>';
-                    echo '</tr>';
-                    while ($row = pg_fetch_row($result)) {
-                        echo '<tr>';
-                        echo '<td>' . $row[0] . '</td>';
-                        echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[1].'</a>'.'</td>';
-                        echo '<td>' . $row[2] . '</td>';
-                        echo '<td>' . $row[3] . '</td>';
-                        echo '<td>' . $row[4] . '</td>';
-                        echo '<td>' . $row[5] . '</td>';
-                        echo '</tr>';
+                    switch ($searchtable) {
+                        case 'comment':
+                            echo '<tr>';
+                            echo '<th>Comment ID</th>';
+                            echo '<th>User ID</th>';
+                            echo '<th>Project Title</th>';
+                            echo '<th>Comment</th>';
+                            echo '</tr>';
+                            while ($row = pg_fetch_row($result)) {
+                                // Query the database to match project IDs to titles
+                                $subquery = "SELECT * FROM Project WHERE pid = '$row[2]'";
+                                $subresult = pg_query($subquery) or die ('Query failed: '.pg_last_error());
+                                $subrow = pg_fetch_row($subresult);
+                                echo '<tr>';
+                                echo '<td>' . $row[0] . '</td>';
+                                echo '<td><a href="user.php?userid='.$row[1].'">'.$row[1].'</a>'.'</td>';
+                                echo '<td><a href="project.php?id='.$row[2].'">'.$subrow[1].'</a>'.'</td>';
+                                echo '<td>' . $row[3] . '</td>';
+                                echo '</tr>';
+                            }
+                            break;
+                        case 'admin':
+                            echo '<tr>';
+                            echo '<th>User ID</th>';
+                            echo '<th>User Name</th>';
+                            echo '</tr>';
+                            while ($row = pg_fetch_row($result)) {
+                                // Query the database to match project IDs to titles
+                                $subquery = "SELECT * FROM Users WHERE uid = '$row[0]'";
+                                $subresult = pg_query($subquery) or die ('Query failed: '.pg_last_error());
+                                $subrow = pg_fetch_row($subresult);
+                                echo '<tr>';
+                                echo '<td>' . $subrow[0] . '</td>';
+                                echo '<td><a href="user.php?userid='.$subrow[0].'">'.$subrow[1].'</a>'.'</td>';
+                                echo '</tr>';
+                            }
+                            break;
+                        case 'users':
+                            echo '<tr>';
+                            echo '<th>User ID</th>';
+                            echo '<th>User Name</th>';
+                            echo '</tr>';
+                            while ($row = pg_fetch_row($result)) {
+                                echo '<tr>';
+                                echo '<td>' . $row[0] . '</td>';
+                                echo '<td><a href="user.php?userid='.$row[0].'">'.$row[1].'</a>'.'</td>';
+                                echo '</tr>';
+                            }
+                            break;
+                        case 'featuredproject':
+                            echo '<tr>';
+                            echo '<th>ID</th>';
+                            echo '<th>Title</th>';
+                            echo '<th>Start Date</th>';
+                            echo '<th>Duration</th>';
+                            echo '<th>Category</th>';
+                            echo '<th>Funding Goal</th>';
+                            echo '</tr>';
+                            while ($row = pg_fetch_row($result)) {
+                                // Query the database to match project IDs to titles
+                                $subquery = "SELECT * FROM Project WHERE pid = '$row[0]'";
+                                $subresult = pg_query($subquery) or die ('Query failed: '.pg_last_error());
+                                $subrow = pg_fetch_row($subresult);
+                                echo '<tr>';
+                                echo '<td>' . $subrow[0] . '</td>';
+                                echo '<td>'.'<a href="project.php?id='.$subrow[0].'">'.$subrow[1].'</a>'.'</td>';
+                                echo '<td>' . $subrow[2] . '</td>';
+                                echo '<td>' . $subrow[3] . '</td>';
+                                echo '<td>' . $subrow[4] . '</td>';
+                                echo '<td>' . $subrow[5] . '</td>';
+                                echo '</tr>';
+                            }
+                            break;
+                        case 'projects':
+                        default:
+                            echo '<tr>';
+                            echo '<th>ID</th>';
+                            echo '<th>Title</th>';
+                            echo '<th>Start Date</th>';
+                            echo '<th>Duration</th>';
+                            echo '<th>Category</th>';
+                            echo '<th>Funding Goal</th>';
+                            echo '</tr>';
+                            while ($row = pg_fetch_row($result)) {
+                                echo '<tr>';
+                                echo '<td>' . $row[0] . '</td>';
+                                echo '<td>'.'<a href="project.php?id='.$row[0].'">'.$row[1].'</a>'.'</td>';
+                                echo '<td>' . $row[2] . '</td>';
+                                echo '<td>' . $row[3] . '</td>';
+                                echo '<td>' . $row[4] . '</td>';
+                                echo '<td>' . $row[5] . '</td>';
+                                echo '</tr>';
+                            }
+                            break;
                     }
                 }
                 echo '</table>';
