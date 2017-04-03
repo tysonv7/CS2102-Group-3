@@ -11,8 +11,14 @@
     </head>
     <body>
         <h1>Welcome, <?php echo $_SESSION['userid'];?></h1>
-        <p>You logged in with password: <?php echo $_SESSION['password'];?></p>
-
+        <div>You logged in with password: <?php echo $_SESSION['password'];?></div>
+        <?php
+            if ($_SESSION['isAdmin']) {
+                echo "<a href='admin.php'>View administrator panel</a>";
+                echo '<br><br>';
+            }
+        ?>
+        
         <!--Connect to DB-->
         <?php
             $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=password")
@@ -42,7 +48,12 @@
         <!--Table for projects created-->
         <table>
             <tr>
-                <th colspan="6">Projects Created</th>
+                <th colspan="6">
+                    <span>Projects Created</span>
+                    <form action="addproj.php" method='post'>
+                        <input type='submit' name='submit' value='Create a new project'>
+                    </form>
+                </th>
             </tr>
             <tr>
                 <th>ID</th>
@@ -164,7 +175,7 @@
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="get">
                 <span>
                     <input type="text" name="searchterm" class="search-bar search-control">
-                    <input type="submit" class="search-control">
+                    <input type="submit" class="search-control" value='Search'>
                 </span>
             </form>
         </div>

@@ -36,6 +36,14 @@
                     if ($row[0] == $uid && $row[2] == $pw) {
                         $_SESSION['userid'] = $_POST['userid'];
                         $_SESSION['password'] = $_POST['password'];
+
+                        // Check if the user is an admin and set the session
+                        // variable as appropriate
+                        $query = "SELECT * FROM Admin WHERE uid = '$uid'";
+                        $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                        if (pg_num_rows($result) == 1) {
+                            $_SESSION['isAdmin'] = true;
+                        }
                         header('Location: dashboard.php');
                         exit();
                     } else {
