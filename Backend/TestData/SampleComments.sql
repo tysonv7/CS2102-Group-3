@@ -452,7 +452,7 @@ INSERT INTO Comment (cid, uid, pid, content) VALUES ('451', 'krobertsonnb', '75'
 INSERT INTO Comment (cid, uid, pid, content) VALUES ('452', 'krobertsonnb', '44', 'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi');
 INSERT INTO Comment (cid, uid, pid, content) VALUES ('453', 'krobertsonnb', '31', 'lorem id ligula suspendisse ornare consequat lectus in est risus auctor');
 INSERT INTO Comment (cid, uid, pid, content) VALUES ('454', 'krobertsonnb', '15', 'nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim');
-INSERT INTO Comment (cid, uid, pid, content) VALUES ('455,' 'bmoralesob', '73', 'nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus');
+INSERT INTO Comment (cid, uid, pid, content) VALUES ('455', 'bmoralesob', '73', 'nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus');
 INSERT INTO Comment (cid, uid, pid, content) VALUES ('456', 'bmoralesob', '94', 'eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus');
 INSERT INTO Comment (cid, uid, pid, content) VALUES ('457', 'bmoralesob', '66', 'nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo');
 INSERT INTO Comment (cid, uid, pid, content) VALUES ('458', 'bmoralesob', '29', 'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit');
