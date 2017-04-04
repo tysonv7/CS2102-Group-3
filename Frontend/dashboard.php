@@ -8,6 +8,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
+        <script>
+
+            function switchToMyStats() {
+                document.getElementById('mystats').style.display = '';
+                document.getElementById('projstats').style.display = 'none';
+            }
+
+            function switchToProjStats() {
+                document.getElementById('mystats').style.display = 'none';
+                document.getElementById('projstats').style.display = '';
+            }
+        </script>
     </head>
     <body>
         <h1>Welcome, <?php echo $_SESSION['userid'];?></h1>
@@ -42,6 +54,117 @@
                 echo '<div>';
                 echo '<span>First featured: '.$row[2].'</span>';
                 echo '</div>';
+            ?>
+        </div>
+
+        <span onClick=switchToMyStats()>My Activity</span>
+        <span onClick=switchToProjStats()>General Statistics</span>
+
+        <!-- Show statistics for user -->
+        <div id='mystats' style="display: ''">
+            <?php
+                $uid = $_SESSION['userid'];
+                // User's most backed and least backed amount
+                $query = "SELECT * FROM Back b1 
+                        WHERE NOT EXISTS (SELECT * FROM Back b2 
+                                            WHERE b2.amount > b1.amount
+                                            AND b2.uid = '$uid')
+                        AND b1.uid = '$uid'";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo "<div>Your most backed amount on a project: 0</div>";
+                } else {
+                    $row = pg_fetch_row($result);
+                    echo "<div>Your most backed amount on a project: "
+                        ."<a href='project.php?id=".$row[1]."'>".$row[2]."</a>"
+                        ."</div>";
+                }
+                // Least
+                $query = "SELECT * FROM Back b1 
+                        WHERE NOT EXISTS (SELECT * FROM Back b2 
+                                            WHERE b2.amount < b1.amount
+                                            AND b2.uid = '$uid')
+                        AND b1.uid = '$uid'";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo "<div>Your least backed amount on a project: 0</div>";
+                } else {
+                    $row = pg_fetch_row($result);
+                    echo "<div>Your least backed amount on a project: "
+                        ."<a href='project.php?id=".$row[1]."'>".$row[2]."</a>"
+                        ."</div>";
+                }
+                // How much I have backed in total
+                $query = "SELECT SUM(amount) FROM Back WHERE uid = '$uid'";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Total amount backed on all projects: 0</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    echo '<div>Total amount backed on all projects: '.$row[0].'</div>';
+                }
+                // How many projects I backed that have been successful
+                $query = "SELECT * FROM (SELECT b.pid FROM Back b, Project p
+                                        GROUP BY b.pid, p.fundNeeded, p.pid
+                                        HAVING SUM(b.amount) >= p.fundNeeded
+                                        AND b.pid = p.pid) as fundedProjects, Back b
+                        WHERE b.uid = '$uid' AND fundedProjects.pid = b.pid";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Successfully backed projects: 0</div>';
+                } else {
+                    echo '<div>Successfully backed projects: '.pg_num_rows($result).'</div>';
+                }
+                // Number of comments made by myself
+                $query = "SELECT * FROM Comment WHERE uid = '$uid'";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Total comments made: 0</div>';
+                } else {
+                    echo '<div>Total comments made: '.pg_num_rows($result).'</div>';
+                }
+            ?>
+        </div>
+
+        <!-- Show general statistics for projects -->
+        <div id='projstats' style="display: none">
+            <?php
+                $uid = $_SESSION['userid'];
+                // Find projects that are almost funded (>=90%)
+                $query = "SELECT b.pid, p.title, SUM(b.amount), p.fundNeeded 
+                          FROM Back b, Project p 
+                          GROUP BY b.pid, p.fundNeeded, p.pid, p.title
+                          HAVING SUM(b.amount) >= p.fundNeeded*0.8
+                          AND SUM(b.amount) < p.fundNeeded AND b.pid = p.pid";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                echo '<table>';
+                echo "<tr><th colspan='4'>Projects close to funding goal (80%)</th></tr>";
+                echo '<tr>';
+                echo '<th>Project ID</th>';
+                echo '<th>Project Title</th>';
+                echo '<th>Current Funding Amount</th>';
+                echo '<th>Funding Goal</th>';
+                echo '</tr>';
+                if (pg_num_rows($result) == 0) {
+                    echo "<tr><td colspan='4'>None at the moment</td></tr>";
+                } else {
+                    while ($row = pg_fetch_row($result)) {
+                        echo '<tr>';
+                        echo '<td>'.$row[0].'</td>';
+                        echo "<td><a href='project.php?id=".$row[0]."'>".$row[1]."</a></td>";
+                        echo '<td>'.$row[2].'</td>';
+                        echo '<td>'.$row[3].'</td>';
+                        echo '</tr>';
+                    }
+                }
+                echo '</table>';
+                // Most funded project (both amount and percentage)
+                // Average funding per project
+                // Most commented on project
+                // Average number of comments per project
+                // Category with the most amount of projects
+                // Project with most backers
+                // Average backers per project
             ?>
         </div>
 

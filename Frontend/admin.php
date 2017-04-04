@@ -35,8 +35,8 @@
         <!-- Return to user's personal dashboard page -->
         <a href="dashboard.php">Return to your dashboard</a>
         <br>
-        <span onClick='switchToProjMgmt()'>Project Management</span>
-        <span onClick='switchToUserMgmt()'>User Management</span>
+        <span onClick=switchToProjMgmt()>Project Management</span>
+        <span onClick=switchToUserMgmt()>User Management</span>
 
         <table id='projmgmt' style="display: ''">
             <tr>
