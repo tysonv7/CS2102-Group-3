@@ -159,12 +159,138 @@
                 }
                 echo '</table>';
                 // Most funded project (both amount and percentage)
+                $query = "SELECT sumtable.pid, p.title, sumtable.sum 
+                          FROM (SELECT b.pid, SUM(b.amount) as sum 
+                                FROM Back b GROUP BY b.pid) as sumtable, Project p
+                          WHERE NOT EXISTS (SELECT * 
+                                            FROM (SELECT b.pid, SUM(b.amount) as sum 
+                                                  FROM Back b GROUP BY b.pid) as sumtable2 
+                                            WHERE sumtable.sum < sumtable2.sum)
+                          AND sumtable.pid = p.pid";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Most funded project (Amount: 0): None</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    echo "<div>Most funded project (Amount: ".$row[2]."): <a href='project.php?id=".$row[0]."'>".$row[1]."</a></div>";
+                }
+                // Percentage
+                $query = "SELECT * 
+                          FROM (SELECT b.pid, p.title, 100.0*SUM(b.amount)/p.fundNeeded as percent 
+                                FROM Back b, Project p GROUP BY b.pid, p.fundNeeded, p.pid 
+                                HAVING p.pid = b.pid) as ptable
+                          WHERE NOT EXISTS (SELECT * 
+                                            FROM (SELECT b.pid, p.title, 100.0*SUM(b.amount)/p.fundNeeded as percent
+                                                  FROM Back b, Project p GROUP BY b.pid, p.fundNeeded, p.pid 
+                                                  HAVING b.pid = p.pid) as ptable2
+                                            WHERE ptable.percent < ptable2.percent)";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Most funded project (Percentage: 0%): None</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    $rounded = number_format($row[2], 2, '.', '');
+                    echo "<div>Most funded project (Percentage: ".$rounded."%): <a href='project.php?id=".$row[0]."'>".$row[1]."</a></div>";
+                }
                 // Average funding per project
+                $query = "SELECT AVG(sum) 
+                          FROM (SELECT SUM(b.amount) as sum 
+                                FROM Back b GROUP BY b.pid) as sumtable";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Average funding amount per project: 0</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    $rounded = number_format($row[0], 2, '.', '');
+                    echo "<div>Average funding amount per project: ".$rounded."</div>";
+                }
+                $query = "SELECT AVG(sum) 
+                          FROM (SELECT 100.0*SUM(b.amount)/p.fundNeeded as sum 
+                                FROM Back b, Project p 
+                                GROUP BY b.pid, p.fundNeeded, p.pid
+                                HAVING b.pid = p.pid) as sumtable";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Average funding progress per project: 0</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    $rounded = number_format($row[0], 2, '.', '');
+                    echo "<div>Average funding progress per project: ".$rounded."%</div>";
+                }
                 // Most commented on project
+                $query = "SELECT sumtable.pid, p.title, sumtable.sum
+                          FROM (SELECT c.pid, COUNT(c.cid) as sum FROM Comment c
+                                GROUP BY c.pid) as sumtable, Project p
+                          WHERE NOT EXISTS (SELECT * 
+                                            FROM (SELECT c.pid, COUNT(c.cid) as sum FROM Comment c
+                                                  GROUP BY c.pid) as sumtable2
+                                            WHERE sumtable.sum < sumtable2.sum)
+                          AND sumtable.pid = p.pid";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Most commented project: None</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    $rounded = number_format($row[0], 2, '.', '');
+                    echo "<div>Most commented project (".$row[2]."): <a href='project.php?id=".$row[0]."'>".$row[1]."</a></div>";
+                }
                 // Average number of comments per project
-                // Category with the most amount of projects
+                $query = "SELECT AVG(sum) 
+                          FROM (SELECT COUNT(c.cid) as sum 
+                                FROM Comment c GROUP BY c.pid) as sumtable";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Average comments per project: 0</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    $rounded = number_format($row[0], 2, '.', '');
+                    echo "<div>Average comments per project: ".$rounded."</div>";
+                }
                 // Project with most backers
+                $query = "SELECT sumtable.pid, p.title, sumtable.sum
+                          FROM (SELECT b.pid, COUNT(b.uid) as sum FROM Back b
+                                GROUP BY b.pid) as sumtable, Project p
+                          WHERE NOT EXISTS (SELECT * 
+                                            FROM (SELECT b.pid, COUNT(b.uid) as sum FROM Back b
+                                                  GROUP BY b.pid) as sumtable2
+                                            WHERE sumtable.sum < sumtable2.sum)
+                          AND sumtable.pid = p.pid";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Most backed project: No backers</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    $rounded = number_format($row[0], 2, '.', '');
+                    echo "<div>Most backed project (".$row[2]." backers): <a href='project.php?id=".$row[0]."'>".$row[1]."</a></div>";
+                }
                 // Average backers per project
+                $query = "SELECT AVG(sum) 
+                          FROM (SELECT COUNT(b.uid) as sum 
+                                FROM Back b GROUP BY b.pid) as sumtable";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Average backers per project: 0</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    $rounded = number_format($row[0], 2, '.', '');
+                    echo "<div>Average backers per project: ".$rounded."</div>";
+                }
+                // Category with the most amount of projects
+                $query = "SELECT *
+                          FROM (SELECT p.category, COUNT(p.pid) as sum FROM Project p
+                                GROUP BY p.category) as sumtable
+                          WHERE NOT EXISTS (SELECT * 
+                                            FROM (SELECT p.category, COUNT(p.pid) as sum FROM Project p
+                                                  GROUP BY p.category) as sumtable2
+                                            WHERE sumtable.sum < sumtable2.sum)";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+                if (pg_num_rows($result) == 0) {
+                    echo '<div>Most popular category: No backers</div>';
+                } else {
+                    $row = pg_fetch_row($result);
+                    $rounded = number_format($row[0], 2, '.', '');
+                    echo "<div>Most popular category (".$row[1]." projects): <a href='dashboard.php?st=".$row[0]."&ss=category&sk=title#search-table'>".$row[0]."</a></div>";
+                }
             ?>
         </div>
 
@@ -305,18 +431,19 @@
         <!--Query DB for projects with searchterm-->
         <div>
             <div>Search for more projects:</div>
-            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="get">
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'].'#search-table');?>" method="get">
                 <span>
                     <input type="text" name="st" class="search-bar search-control">
-                    <select name='ss'>
+                    <select name='ss' id='search-select'>
                         <option value='project'>Project</option>
                         <option value='users'>User</option>
                         <option value='comment'>Comments</option>
                         <option value='admin'>Administrators</option>
                         <option value='featuredproject'>Featured</option>
+                        <option value='category'>Category</option>
                     </select>
                     <input type='radio' name='sk' value='title' checked>Title/Name
-                    <input type='radio' name='sk' value='id'>ID
+                    <input type='radio' name='sk' value='id' id='idRadioButton'>ID
                     <input type="submit" class="search-control" value='Search'>
                 </span>
             </form>
@@ -332,7 +459,16 @@
                 $searchtable = $_GET['ss'];
                 $searchkey = $_GET['sk'];
                 $query = "SELECT * FROM "."$searchtable";
+                $idRadioButton = 'false';
                 switch ($searchtable) {
+                    // 'category' is handled by the default case which uses projects 
+                    // anyway hence it works
+                    case 'category':
+                        // Disable the radio button for ID and only allow searching by
+                        // title of category
+                        $idRadioButton = 'true';
+                        $query = "SELECT * FROM Project WHERE LOWER(category) LIKE LOWER('%".$searchterm."%') ORDER BY category";
+                        break;
                     case 'users':
                         switch ($searchkey) {
                             case 'id':
@@ -394,7 +530,7 @@
                 }
                 $result = pg_query($query) or die ('Query failed: '.pg_last_error());
                 
-                echo '<table class="search-table">';
+                echo '<table id="search-table">';
                 echo '<tr>';
                 switch ($searchtable) {
                         case 'comment':
@@ -529,5 +665,15 @@
                 echo '</table>';
             }
         ?>
+        <!-- Script to handle disabling of radio button -->
+        <script>
+            document.getElementById('search-select').onchange = function () {
+                if (this.selectedIndex == 5) {
+                    document.getElementById('idRadioButton').disabled = true;
+                } else {
+                    document.getElementById('idRadioButton').disabled = false;
+                }
+            }
+        </script>
     </body>
 </html>
