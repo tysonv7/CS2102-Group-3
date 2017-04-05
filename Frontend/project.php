@@ -33,8 +33,17 @@
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 $row = pg_fetch_row($result);
 
+                $subquery = "SELECT SUM(amount) FROM Back WHERE pid = '$project_id'";
+                $subresult = pg_query($subquery) or die ('Query failed: '.pg_last_error());
+                $subrow = pg_fetch_row($subresult);
+                $goalpercent = $subrow[0]/$row[5]*100.0;
+
                 echo '<h1>Project ID: '.$project_id.'</h1>';
                 echo '<h1>'.$row[1].'</h1>';
+                echo '<div>Current Funding Progress: '.$subrow[0].'/'.$row[5].' ('.$goalpercent.'%)'.'</div>';
+                if ($goalpercent >= 100) {
+                    echo '<strong>Project successfully funded!</strong>';
+                }
 
                 // Query DB to check if the current user has a
                 // row in the Back table yet
@@ -108,6 +117,28 @@
             }
         ?>
 
+        <!-- Display backers for this project -->
+        <table>
+            <?php
+                if (isset($_GET['id'])) {
+                    $query = "SELECT b.uid, u.name FROM Back b, Users u 
+                              WHERE b.pid = '$project_id' AND u.uid = b.uid";
+                    $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+
+                    echo '<tr><th>Backers ('.pg_num_rows($result).')</th></tr>';
+                    if (pg_num_rows($result) == 0) {
+                        echo '<tr><td>No backers</td></tr>';
+                    } else {
+                        while ($row = pg_fetch_row($result)) {
+                            echo '<tr>';
+                            echo '<td><a href="user.php?userid='.$row[0].'">'.$row[1].'</a>'.'</td>';
+                            echo '</tr>';
+                        }
+                    }
+                }
+            ?>
+        </table>
+
         <!-- Comment section -->
         <div>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);?>" method='post'>
@@ -139,15 +170,6 @@
 
         <br>
         <table>
-            <tr>
-                <?php
-                    if ($_SESSION['isAdmin']) {
-                        echo "<th colspan='3'>Comments</th>";
-                    } else {
-                        echo "<th colspan='2'>Comments</th>";
-                    }
-                ?>
-            </tr>
             <?php
                 if (isset($_GET['id'])) {
                     $project_id = $_GET['id'];
@@ -156,11 +178,17 @@
                               WHERE c.pid = '$project_id' AND c.uid = u.uid";
                     $result = pg_query($query) or die ('Query failed: '.pg_last_error());
 
+                    if ($_SESSION['isAdmin']) {
+                        echo "<tr><th colspan='3'>Comments (".pg_num_rows($result).")</th></tr>";
+                    } else {
+                        echo "<tr><th colspan='2'>Comments (".pg_num_rows($result).")</th></tr>";
+                    }
+
                     if (pg_num_rows($result) == 0) {
                         if ($_SESSION['isAdmin']) {
-                            echo "<th colspan='3'>No comments</th>";
+                            echo "<tr><th colspan='3'>No comments</th></tr>";
                         } else {
-                            echo "<th colspan='2'>No comments</th>";
+                            echo "<tr><th colspan='2'>No comments</th></tr>";
                         }
                     }
                     while ($row = pg_fetch_row($result)) {
