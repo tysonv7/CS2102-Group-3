@@ -166,7 +166,7 @@ CREATE TABLE Comment (
   cid INT,
   uid VARCHAR(64),
   pid INT,
-  content VARCHAR(512) NOT NULL,
+  content VARCHAR(1024) NOT NULL,
   FOREIGN KEY (uid) REFERENCES Users (uid)
     ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (pid) REFERENCES Project (pid)
