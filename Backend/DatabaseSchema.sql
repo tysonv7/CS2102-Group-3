@@ -67,7 +67,7 @@ FOR EACH STATEMENT
 EXECUTE PROCEDURE FollowingUpdate();
 
 CREATE TABLE Project (
-  pid VARCHAR(64),
+  pid INT,
   title VARCHAR(64) NOT NULL,
   startDate DATE NOT NULL,
   duration INT NOT NULL,
@@ -92,7 +92,7 @@ FOR EACH STATEMENT
 EXECUTE PROCEDURE ProjectUpdate();
 
 CREATE TABLE FeaturedProject (
-  pid VARCHAR(64),
+  pid INT,
   featureDate DATE NOT NULL,
   FOREIGN KEY (pid) REFERENCES Project (pid)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -115,7 +115,7 @@ EXECUTE PROCEDURE FeaturedProjectUpdate();
 
 CREATE TABLE Start (
   uid VARCHAR(64),
-  pid VARCHAR(64),
+  pid INT,
   FOREIGN KEY (uid) REFERENCES Users (uid)
     ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (pid) REFERENCES Project (pid)
@@ -139,7 +139,7 @@ EXECUTE PROCEDURE StartUpdate();
 
 CREATE TABLE Back (
   uid VARCHAR(64),
-  pid VARCHAR(64),
+  pid INT,
   amount INT NOT NULL,
   FOREIGN KEY (uid) REFERENCES Users (uid)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -163,9 +163,9 @@ FOR EACH STATEMENT
 EXECUTE PROCEDURE BackUpdate();
 
 CREATE TABLE Comment (
-  cid VARCHAR(64),
+  cid INT,
   uid VARCHAR(64),
-  pid VARCHAR(64),
+  pid INT,
   content VARCHAR(512) NOT NULL,
   FOREIGN KEY (uid) REFERENCES Users (uid)
     ON UPDATE CASCADE ON DELETE CASCADE,
