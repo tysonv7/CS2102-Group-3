@@ -1,13 +1,154 @@
-.form-control {
-    margin: 5px;
+html, body {
+    height: 100%;
 }
 
-.form-header {
-    margin-left: 5px;
+/* To adjust the widths of the login page form*/
+@media (min-width: 768px){
+  .container.form-login{
+    max-width:30%;
+  }  
 }
 
-.form-response {
-    margin-left: 5px;
+@media (min-width: 992px){
+  .container.form-login{
+    max-width:30%;
+  }
+}
+
+/* Log in page image and form CSS */
+#login-logo {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.container.form-login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translateY(-50%); */
+    transform: translateX(-50%);
+}
+
+/* Dashboard CSS */
+#form-logout {
+    margin: 30px 0px 15px 30px;
+}
+
+/* Font and styles for the welcome and admin panel headers */
+#header-welcome, #header-admin-panel {
+    margin-left: 30px;
+}
+
+#header-admin-panel {
+    font-style: italic;
+}
+
+/* Dimensions and margins for the stats and featured project containers */
+.container.stats, .container.fp {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.container.fp {
+    margin-left: 15px;
+}
+
+.jumbotron.stats {
+    padding: 15px !important;
+    /*background-color: #ededed;*/
+    background-color: #fff;
+    margin-bottom: 0px !important;
+}
+
+/* Borders for the tab content div */
+.nav-tabs {
+    border-bottom: 1px solid #555 !important;
+}
+
+.nav-tabs > li > a {
+    border: 1px solid #555 !important;
+}
+
+.tab-content {
+    border-left: 1px solid #555;
+    border-right: 1px solid #555;
+    border-bottom: 1px solid #555;
+}
+
+/* Font styles for statistics */
+.header-stats, .content-stats {
+    text-align: center;
+}
+
+.header-stats{
+    font-size: 1em;
+}
+
+.content-stats {
+    font-size: 1.6em;
+}
+
+/* Margins for the project and user stats contents */
+.col-md-6 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#projstats, #mystats {
+    padding: 30px;
+}
+
+.container.display-table, .container.search-table {
+    width: 100% !important ;
+    margin: 30px 0px 30px 0px !important;
+    padding: 0px 30px 0px 30px !important;
+}
+
+/* Shifting the create project button to the extreme right */
+#createProjDiv {
+    position: relative;
+}
+
+th#createProjHeader {
+    padding: 15px 0px 15px 0px !important;
+}
+
+#createProj {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Margins and styles for search */
+.jumbotron.stats {
+    position: relative;
+}
+
+.search {
+    position: absolute;
+    right: 15px;
+    top: 18px;
+}
+
+.search-bar {
+    width: 200px;
+}
+
+.search-control {
+    margin-left:10px !important;
+}
+
+.search-table {
+    margin-top: 20px;
+}
+
+
+
+/* Table styles */
+th, td {
+    text-align: center !important;
+    padding: 5px !important;
 }
 
 table {
@@ -23,14 +164,7 @@ table, th, tr, td {
     border: 1px solid black;
 }
 
-.search-control {
-    margin-top: 10px;
-}
-
-.search-bar.search-control {
-    width: 20%;
-}
-
-.search-table {
-    margin-top: 20px;
+#table-80 {
+    margin-top: 15px;
+    margin-bottom: 30px;
 }

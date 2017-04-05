@@ -8,14 +8,28 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     </head>
     <body>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" class="container form-signin">
-            <div class="form-header">Username:</div>
+        <div id='login-logo'>
+            <img src='img/bts.jpg' alt='logo' width='300px' height='300px'>
+        </div>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" class="container form-login">
+            <div class='form-group'>
+                <label>Username:</label>
+                <input type='text' class='form-control' name='userid'>
+            </div>
+            <div class='form-group'>
+                <label>Password:</label>
+                <input type='password' class='form-control' name='password'>
+            </div>
+
+            <!--<div class="form-header">Username:</div>
             <input type="text" name="userid" class="form-control"></br>
             <div class="form-header">Password:</div>
-            <input type="password" name="password" class="form-control"></br>
-            <input type="submit" class="form-control">
+            <input type="password" name="password" class="form-control"></br>-->
+            <input type="submit" class="btn btn-primary form-control" value='Log In'>
         </form>
 
         <!--Connect to DB-->
