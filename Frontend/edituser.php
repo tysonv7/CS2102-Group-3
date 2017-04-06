@@ -8,10 +8,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Return to user's personal dashboard page -->
-        <a href="admin.php">Return to project management</a>
+        <form action='' method='post' id='form-to-dashboard'>
+            <input type='submit' name='toDashboard' value='< Back To Administrator Panel' class='btn btn-primary btn-sm'>
+        </form>
+
+        <?php
+            if (isset($_POST['toDashboard'])) {
+                header('Location: admin.php');
+                exit();
+            }
+        ?>
 
         <?php        
         
@@ -25,27 +38,36 @@
                 $result = pg_query($query) or die ('Query failed: '.pg_last_error());
                 $row = pg_fetch_row($result);
 
+                echo "<div class='container admin'>";
                 echo "<form action='".htmlspecialchars($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'])."' method='post'>";
                 echo '<table>';
 
                 echo '<tr>';
-                echo '<td>Old User ID: '.$row[0].'</td>';
-                echo "<td>New User ID: <input type='text' name='userid'></td>";
+                echo '<td>Old User ID:</td>';
+                echo '<td>'.$row[0].'</td>';
+                echo "<td>New User ID:</td>";
+                echo "<td><input type='text' name='userid' size='41'></td>";
                 echo '</tr>';
 
                 echo '<tr>';
-                echo '<td>Old Username: '.$row[1].'</td>';
-                echo "<td>New Username: <input type='text' name='username'></td>";
+                echo '<td>Old Username:</td>';
+                echo '<td>'.$row[1].'</td>';
+                echo "<td>New Username:</td>";
+                echo "<td><input type='text' name='username' size='41'></td>";
                 echo '</tr>';
 
                 echo '<tr>';
-                echo '<td>Old Password: '.$row[2].'</td>';
-                echo "<td>New Password: <input type='text' name='userpw'></td>";
+                echo '<td>Old Password:</td>';
+                echo '<td>'.$row[2].'</td>';
+                echo "<td>New Password:</td>";
+                echo "<td><input type='text' name='userpw' size='41'></td>";
                 echo '</tr>';
 
                 echo '</table>';
-                echo "<input type='submit' name='submit'>";
+                echo '<br>';
+                echo "<input type='submit' name='submit' class='btn btn-primary btn-sm'>";
                 echo '</form>';
+                echo '</div>';
 
                 if(isset($_POST['submit'])) {
                     $newuid = $_POST['userid'];

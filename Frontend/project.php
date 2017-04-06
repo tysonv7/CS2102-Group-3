@@ -11,10 +11,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Return to user's personal dashboard page -->
-        <a href="dashboard.php">Return to your dashboard</a>
+        <form action='' method='post' id='form-to-dashboard'>
+            <input type='submit' name='toDashboard' value='< Back To Dashboard' class='btn btn-primary btn-sm'>
+        </form>
+
+        <?php
+            if (isset($_POST['toDashboard'])) {
+                header('Location: dashboard.php');
+                exit();
+            }
+        ?>
 
         <!--Connect to DB-->
         <?php
@@ -37,13 +50,17 @@
                 $subresult = pg_query($subquery) or die ('Query failed: '.pg_last_error());
                 $subrow = pg_fetch_row($subresult);
                 $goalpercent = $subrow[0]/$row[5]*100.0;
+                $rounded = number_format($goalpercent, 2, '.', '');
 
+                echo "<div id='header-project'>";
                 echo '<h1>Project ID: '.$project_id.'</h1>';
                 echo '<h1>'.$row[1].'</h1>';
-                echo '<div>Current Funding Progress: '.$subrow[0].'/'.$row[5].' ('.$goalpercent.'%)'.'</div>';
+                echo '<div>Current Funding Progress:</div>';
+                echo "<div id='projFunding'>".$subrow[0].'/'.$row[5].' ('.$rounded.'%)'.'</div>';
                 if ($goalpercent >= 100) {
-                    echo '<strong>Project successfully funded!</strong>';
+                    echo "<strong id='header-success'>Project successfully funded!</strong><br>";
                 }
+                echo '<br>';
 
                 // Query DB to check if the current user has a
                 // row in the Back table yet
@@ -52,8 +69,10 @@
                 $result = pg_query($query) or die('Query failed: '.pg_last_error());
                 if (pg_num_rows($result) == 0) {
                     $buttonLabel = 'Back this project';
+                    $buttonColor = 'btn-success';
                 } else {
                     $buttonLabel = 'Update your pledge';
+                    $buttonColor = 'btn-warning';
                     // Also display a small notification showing the user's
                     // current pledge
                     $temp = pg_fetch_row($result);
@@ -62,8 +81,8 @@
 
                 // Display a mini form to back the project from here
                 echo "<form action='".htmlspecialchars($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'])."' method='post'>";
-                echo "<input type='text' name='submitAmount'>";
-                echo "<input type='submit' name='submit' value='$buttonLabel'>";
+                echo "<input type='text' name='submitAmount' id='header-back'>";
+                echo "<input type='submit' name='submit' value='$buttonLabel' class='btn btn-sm ".$buttonColor."'>";
                 echo '</form>';
                 // Check if a backAmount has been submitted, run the 
                 // insertion script if backAmount is submitted
@@ -114,10 +133,12 @@
                 echo '<div>Category: '.$row[4].'</div>';
                 echo '<div>Funding Goal: '.$row[5].'</div>';
                 echo '<div>Description: '.$row[6].'</div>';
+                echo '</div>';
             }
         ?>
 
         <!-- Display backers for this project -->
+        <div class='container display-table'>
         <table>
             <?php
                 if (isset($_GET['id'])) {
@@ -125,25 +146,35 @@
                               WHERE b.pid = '$project_id' AND u.uid = b.uid";
                     $result = pg_query($query) or die ('Query failed: '.pg_last_error());
 
-                    echo '<tr><th>Backers ('.pg_num_rows($result).')</th></tr>';
+                    echo "<tr><th colspan='8'>Backers (".pg_num_rows($result).")</th></tr>";
                     if (pg_num_rows($result) == 0) {
-                        echo '<tr><td>No backers</td></tr>';
+                        echo "<tr><td colspan='8'>No backers</td></tr>";
                     } else {
+                        $sum = 0;
                         while ($row = pg_fetch_row($result)) {
-                            echo '<tr>';
+                            $sum = $sum + 1;
+                            if ($sum > 8) {
+                                echo '<tr>';
+                                $sum = 1;
+                            }
                             echo '<td><a href="user.php?userid='.$row[0].'">'.$row[1].'</a>'.'</td>';
-                            echo '</tr>';
+                            if ($sum > 8) {
+                                echo '</tr>';
+                            }
                         }
                     }
                 }
             ?>
         </table>
+        </div>
 
         <!-- Comment section -->
-        <div>
+        <div class='container comment'>
+            <label>Leave a comment:</label>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);?>" method='post'>
                 <textarea name='commentBox' cols='80' rows='5'></textarea>
-                <input type='submit' name='submitComment' value='Comment'>
+                <br>
+                <input type='submit' name='submitComment' value='Comment' class='btn btn-primary btn-sm'>
             </form>
         </div>
 
@@ -168,7 +199,7 @@
             }
         ?>
 
-        <br>
+        <div class='container comment-table'>
         <table>
             <?php
                 if (isset($_GET['id'])) {
@@ -198,7 +229,7 @@
                         if ($_SESSION['isAdmin']) {
                             echo '<td>';
                             echo "<form action='".htmlspecialchars($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'])."' method='post'>";
-                            echo "<button type='submit' name='deleteComment' value='$row[2]'>Delete</button>";
+                            echo "<button type='submit' name='deleteComment' value='$row[2]' class='btn btn-danger btn-sm'>Delete</button>";
                             echo '</form>';
                             echo '</td>';
                         }
@@ -218,5 +249,6 @@
                 }
             ?>
         </table>
+        </div>
     </body>
 </html>

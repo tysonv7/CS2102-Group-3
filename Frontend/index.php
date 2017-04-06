@@ -13,7 +13,7 @@
     </head>
     <body>
         <div id='login-logo'>
-            <img src='img/bts.jpg' alt='logo' width='300px' height='300px'>
+            <img src='img/cf.png' alt='logo' width='auto' height='100px'>
         </div>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" class="container form-login">
             <div class='form-group'>
@@ -63,7 +63,7 @@
                         header('Location: dashboard.php');
                         exit();
                     } else {
-                        echo 'Wrong username or password entered';
+                        echo "<div class='container form-login form-error'><label>Wrong username or password entered</label></div>";
                     }
                 }
             ?>

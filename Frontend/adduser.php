@@ -8,22 +8,40 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Return to user's personal dashboard page -->
-        <a href="dashboard.php">Return to your dashboard</a>
-
-        <h1>User Registration Page</h1>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-            <div>User ID:</div>
-            <input type='text' name='userid'>
-            <div>User Name:</div>
-            <input type='text' name = 'username'>
-            <div>Password:</div>
-            <input type='text' name='userpw'>
-            <br>
-            <input type='submit' name='submitUser'>
+        <form action='' method='post' id='form-to-dashboard'>
+            <input type='submit' name='toDashboard' value='< Back To Administrator Panel' class='btn btn-primary btn-sm'>
         </form>
+
+        <?php
+            if (isset($_POST['toDashboard'])) {
+                header('Location: admin.php');
+                exit();
+            }
+        ?>
+
+        <div class='container addproj'>
+            <h1>User Registration Page</h1>
+            <br>
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
+                <div>User ID:</div>
+                <input type='text' name='userid' size='41'>
+                <br><br>
+                <div>User Name:</div>
+                <input type='text' name = 'username' size='41'>
+                <br><br>
+                <div>Password:</div>
+                <input type='text' name='userpw' size='41'>
+                <br><br>
+                <input type='submit' name='submitUser' class='btn btn-primary btn-sm'>
+            </form>
+        </div>
 
         <!--Connect to DB-->
         <?php
@@ -47,15 +65,15 @@
                               AND name = '$username' AND password = '$password'";
                     if ($result = pg_query($query)) {
                         if (pg_num_rows($result) == 1) {
-                            echo '<div>Successfully registered user!</div>';
+                            echo "<div class='container addproj'>Successfully registered user!</div>";
                         } else {
-                            echo '<div>Failed to register user: Failed verification check</div>';
+                            echo "<div class='container addproj'>Failed to register user: Failed verification check</div>";
                         }
                     } else {
-                        echo '<div>Failed to register user: Verification query error</div>';
+                        echo "<div class='container addproj'>Failed to register user: Verification query error</div>";
                     }
                 } else {
-                    echo '<div>Failed to register user: Check the input fields again</div>';
+                    echo "<div class='container addproj'>Failed to register user: Check the input fields again</div>";
                 }
             }
         ?>

@@ -8,26 +8,46 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Return to user's personal dashboard page -->
-        <a href="dashboard.php">Return to your dashboard</a>
-
-        <h1>Project Creation Page</h1>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-            <div>Title of project:</div>
-            <input type='text' name='projTitle'>
-            <div>Duration:</div>
-            <input type='text' name = 'projDuration'>
-            <div>Category:</div>
-            <input type='text' name='projCategory'>
-            <div>Funding Goal:</div>
-            <input type='text' name='projFunding'>
-            <div>Description(Max 2000 characters):</div>
-            <textarea name='projDescription' cols='40' rows='5'></textarea>
-            <br>
-            <input type='submit' name='submitProj'>
+        <form action='' method='post' id='form-to-dashboard'>
+            <input type='submit' name='toDashboard' value='< Back To Dashboard' class='btn btn-primary btn-sm'>
         </form>
+
+        <?php
+            if (isset($_POST['toDashboard'])) {
+                header('Location: dashboard.php');
+                exit();
+            }
+        ?>
+
+        <div class='container addproj'>
+            <h1>Project Creation Page</h1>
+            <br>
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
+                <div>Title of project:</div>
+                <input type='text' name='projTitle' size='41'>
+                <br><br>
+                <div>Duration:</div>
+                <input type='text' name = 'projDuration' size='41'>
+                <br><br>
+                <div>Category:</div>
+                <input type='text' name='projCategory' size='41'>
+                <br><br>
+                <div>Funding Goal:</div>
+                <input type='text' name='projFunding' size='41'>
+                <br><br>
+                <div>Description(Max 2000 characters):</div>
+                <textarea name='projDescription' cols='40' rows='5'></textarea>
+                <br><br>
+                <input type='submit' name='submitProj' class='btn btn-primary btn-sm'>
+            </form>
+        </div>
 
         <!--Connect to DB-->
         <?php
@@ -60,15 +80,15 @@
                               AND p.description = '$desc'";
                     if ($result = pg_query($query)) {
                         if (pg_num_rows($result) == 1) {
-                            echo '<div>Successfully created project!</div>';
+                            echo "<div class='container addproj'>Successfully created project!</div>";
                         } else {
-                            echo '<div>Failed to create project: Failed verification check</div>';
+                            echo "<div class='container addproj'>Failed to create project: Failed verification check</div>";
                         }
                     } else {
-                        echo '<div>Failed to create project: Verification query error</div>';
+                        echo "<div class='container addproj'>Failed to create project: Verification query error</div>";
                     }
                 } else {
-                    echo '<div>Failed to create project: Check the input fields again</div>';
+                    echo "<div class='container addproj'>Failed to create project: Check the input fields again</div>";
                 }
             }
         ?>

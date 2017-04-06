@@ -16,7 +16,7 @@
     <body>
         <?php
             echo "<form action='' method='post' id='form-logout'>";
-            echo "<input type='submit' name='logout' value='< Log Out' class='btn btn-danger'>";
+            echo "<input type='submit' name='logout' value='< Log Out' class='btn btn-danger btn-sm'>";
             echo '</form>';
 
             if (isset($_POST['logout'])) {
@@ -77,7 +77,7 @@
                             <option value='category'>Category</option>
                         </select>
                         <input type="text" name="st" class="search-bar search-control">
-                        <input type="submit" class="search-control btn btn-primary" value='Search'>
+                        <input type="submit" class="search-control btn btn-primary btn-sm" value='Search'>
                     </span>
                 </form>
             </div>
@@ -423,7 +423,7 @@
                     <div id='createProjDiv'>
                         <span>Projects Created</span>
                         <form id='createProj' action="addproj.php" method='post'>
-                            <input type='submit' name='submit' value='Create a new project' class='btn btn-primary'>
+                            <input type='submit' name='submit' value='Create a new project' class='btn btn-success btn-sm'>
                         </form>
                     </div>
                 </th>
@@ -529,11 +529,11 @@
                         $sum = $sum + 1;
                         if ($sum > 8) {
                             echo '<tr>';
+                            $sum = 1;
                         }
                         echo '<td><a href="user.php?userid='.$row[0].'">'.$row[1].'</a>'.'</td>';
                         if ($sum > 8) {
-                            echo '<tr>';
-                            $sum = ($sum + 1) % 8;
+                            echo '</tr>';
                         }
                     }
                 }
@@ -559,11 +559,11 @@
                         $sum = $sum + 1;
                         if ($sum > 8) {
                             echo '<tr>';
+                            $sum = 1;
                         }
                         echo '<td><a href="user.php?userid='.$row[0].'">'.$row[1].'</a>'.'</td>';
                         if ($sum > 8) {
-                            echo '<tr>';
-                            $sum = ($sum + 1) % 8;
+                            echo '</tr>';
                         }
                     }
                 }
