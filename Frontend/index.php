@@ -15,22 +15,22 @@
         <div id='login-logo'>
             <img src='img/cf.png' alt='logo' width='auto' height='100px'>
         </div>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" class="container form-login">
-            <div class='form-group'>
-                <label>Username:</label>
-                <input type='text' class='form-control' name='userid'>
-            </div>
-            <div class='form-group'>
-                <label>Password:</label>
-                <input type='password' class='form-control' name='password'>
-            </div>
-
-            <!--<div class="form-header">Username:</div>
-            <input type="text" name="userid" class="form-control"></br>
-            <div class="form-header">Password:</div>
-            <input type="password" name="password" class="form-control"></br>-->
-            <input type="submit" class="btn btn-primary form-control" value='Log In'>
-        </form>
+        <div class="container form-login">
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
+                <div class='form-group'>
+                    <label>Username:</label>
+                    <input type='text' class='form-control' name='userid'>
+                </div>
+                <div class='form-group'>
+                    <label>Password:</label>
+                    <input type='password' class='form-control' name='password'>
+                </div>
+                <input type="submit" class="btn btn-primary form-control" value='Log In'>
+            </form>
+            <form action='register.php' method='post' class='register'>
+                <input type='submit' class='btn btn-success form-control' value='Register'>
+            </form>
+        </div>
 
         <!--Connect to DB-->
         <?php

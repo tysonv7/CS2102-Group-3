@@ -60,7 +60,7 @@
                 echo '<td>Old Password:</td>';
                 echo '<td>'.$row[2].'</td>';
                 echo "<td>New Password:</td>";
-                echo "<td><input type='text' name='userpw' size='41'></td>";
+                echo "<td><input type='password' name='userpw' size='41' autocomplete='new-password'></td>";
                 echo '</tr>';
 
                 echo '</table>';

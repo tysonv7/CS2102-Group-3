@@ -16,12 +16,12 @@
     <body>
         <!-- Return to user's personal dashboard page -->
         <form action='' method='post' id='form-to-dashboard'>
-            <input type='submit' name='toDashboard' value='< Back To Administrator Panel' class='btn btn-primary btn-sm'>
+            <input type='submit' name='toDashboard' value='< Back To Login Page' class='btn btn-primary btn-sm'>
         </form>
 
         <?php
             if (isset($_POST['toDashboard'])) {
-                header('Location: admin.php');
+                header('Location: index.php');
                 exit();
             }
         ?>
@@ -65,15 +65,15 @@
                               AND name = '$username' AND password = '$password'";
                     if ($result = pg_query($query)) {
                         if (pg_num_rows($result) == 1) {
-                            echo "<div class='container addproj'>Successfully registered user!</div>";
+                            echo "<div class='container addproj'>Successfully registered!</div>";
                         } else {
-                            echo "<div class='container addproj'>Failed to register user: Failed verification check</div>";
+                            echo "<div class='container addproj'>Failed to register: Failed verification check</div>";
                         }
                     } else {
-                        echo "<div class='container addproj'>Failed to register user: Verification query error</div>";
+                        echo "<div class='container addproj'>Failed to register: Verification query error</div>";
                     }
                 } else {
-                    echo "<div class='container addproj'>Failed to register user: Check the input fields again</div>";
+                    echo "<div class='container addproj'>Failed to register: Check the input fields again</div>";
                 }
             }
         ?>

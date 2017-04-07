@@ -4,13 +4,13 @@ html {
 
 /* To adjust the widths of the login page form*/
 @media (min-width: 768px){
-  .container.form-login{
+  .container.form-login {
     max-width:30%;
   }  
 }
 
 @media (min-width: 992px){
-  .container.form-login{
+  .container.form-login {
     max-width:30%;
   }
 }
@@ -22,21 +22,25 @@ html {
 
 #login-logo {
     text-align: center;
-    margin-top: 220px;
+    margin-top: 200px;
 }
 
 .container.form-login {
     position: absolute;
-    top: 45%;
+    top: 42%;
     left: 50%;
     /* transform: translateY(-50%); */
     transform: translateX(-50%);
 }
 
+.register {
+    margin-top: 15px;
+}
+
 .form-error {
     text-align: center;
     color: red;
-    margin-top: 200px;
+    margin-top: 250px;
 }
 
 /* Dashboard CSS */
