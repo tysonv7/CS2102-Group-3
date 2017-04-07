@@ -119,9 +119,9 @@
                               AND fundNeeded = '$funding' AND description = '$desc'";
                     $result = pg_query($query) or die ('Update failed: Verification query failed');
                     if (pg_num_rows($result) == 1) {
-                        echo '<div>Successfully updated project details</div>';
+                        echo "<div class='container addproj'>Successfully updated project details</div>";
                     } else {
-                        echo '<div>Update failed: Failed verification check</div>';
+                        echo "<div class='container addproj'>Update failed: Failed verification check</div>";
                     }
                 }
             }

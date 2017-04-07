@@ -179,6 +179,18 @@
         </div>
 
         <?php
+
+            if (isset($_POST['deleteComment'])) {
+                $cid = $_POST['deleteComment'];
+                $query = "DELETE FROM Comment 
+                            WHERE cid = '$cid'";
+                $result = pg_query($query) or die ('Query failed: '.pg_last_error());
+
+                // Refresh the page to update the backing amount notification
+                header('Location: '.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+                die;
+            }
+
             if (isset($_GET['id'])) {
                 $userid = $_SESSION['userid'];
                 $project_id = $_GET['id'];
@@ -234,17 +246,6 @@
                             echo '</td>';
                         }
                         echo '</tr>';
-                    }
-                    
-                    if (isset($_POST['deleteComment'])) {
-                        $cid = $_POST['deleteComment'];
-                        $query = "DELETE FROM Comment 
-                                  WHERE cid = '$cid'";
-                        $result = pg_query($query) or die ('Query failed: '.pg_last_error());
-
-                        // Refresh the page to update the backing amount notification
-                        header('Location: '.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-                        die;
                     }
                 }
             ?>

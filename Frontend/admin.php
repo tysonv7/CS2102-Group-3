@@ -57,7 +57,7 @@
                             <th>Featured Settings</th>
                         </tr>
                         <?php
-                            $query = "SELECT * FROM Project";
+                            $query = "SELECT * FROM Project ORDER BY pid";
                             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
                             if (isset($_POST['deleteProj'])) {
@@ -174,7 +174,7 @@
                             <th>Administrator Settings</th>
                         </tr>
                         <?php
-                            $query = "SELECT * FROM Users";
+                            $query = "SELECT * FROM Users ORDER BY name";
                             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
                             while ($row = pg_fetch_row($result)) {

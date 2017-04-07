@@ -83,9 +83,9 @@
                               AND name = '$username' AND password = '$password'";
                     $result = pg_query($query) or die ('Update failed: Verification query failed');
                     if (pg_num_rows($result) == 1) {
-                        echo '<div>Successfully updated user details</div>';
+                        echo "<div class='container addproj'>Successfully updated user details</div>";
                     } else {
-                        echo '<div>Update failed: Failed verification check</div>';
+                        echo "<div class='container addproj'>Update failed: Failed verification check</div>";
                     }
                 }
             }
