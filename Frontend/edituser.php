@@ -50,9 +50,9 @@
                 echo '</tr>';
 
                 echo '<tr>';
-                echo '<td>Old Username:</td>';
+                echo '<td>Old Name:</td>';
                 echo '<td>'.$row[1].'</td>';
-                echo "<td>New Username:</td>";
+                echo "<td>New Name:</td>";
                 echo "<td><input type='text' name='username' size='41'></td>";
                 echo '</tr>';
 

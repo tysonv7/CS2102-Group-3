@@ -18,7 +18,7 @@
         <div class="container form-login">
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
                 <div class='form-group'>
-                    <label>Username:</label>
+                    <label>User ID:</label>
                     <input type='text' class='form-control' name='userid'>
                 </div>
                 <div class='form-group'>

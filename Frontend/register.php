@@ -33,7 +33,7 @@
                 <div>User ID:</div>
                 <input type='text' name='userid' size='41'>
                 <br><br>
-                <div>User Name:</div>
+                <div>Full Name:</div>
                 <input type='text' name = 'username' size='41'>
                 <br><br>
                 <div>Password:</div>
